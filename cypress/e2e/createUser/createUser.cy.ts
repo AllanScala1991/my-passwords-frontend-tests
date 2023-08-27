@@ -1,5 +1,5 @@
 import { CREATE_USER } from "../../locators/createUser/createUserLocator";
-import { LOGIN } from "../../locators/login/loginLocation";
+import { LOGIN } from "../../locators/login/loginLocator";
 import { ChanceService } from "../../utils/chance";
 
 describe("Create User Tests", () => {
@@ -58,7 +58,7 @@ describe("Create User Tests", () => {
     })
     
     it("Duplicated username", () => {
-        cy.createNewUser(chanceService, {
+        cy.createNewUser({
             name: chanceService.generateName(),
             email: chanceService.generateEmail(),
             username: "test",

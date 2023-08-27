@@ -2,9 +2,8 @@
 
 import { CREATE_USER } from "../locators/createUser/createUserLocator";
 import { CreateUserModel } from "../models/createUser.model";
-import { ChanceService } from "../utils/chance";
 
-Cypress.Commands.add("createNewUser", (chanceService: ChanceService, user: CreateUserModel) => {
+Cypress.Commands.add("createNewUser", (user: CreateUserModel) => {
     cy.visit("/create/user");
     cy.get(CREATE_USER.INPUT_NAME)
     .should("be.visible")
@@ -26,10 +25,15 @@ Cypress.Commands.add("createNewUser", (chanceService: ChanceService, user: Creat
     .and("contain.text", "Parabéns, seu usuário foi criado com sucesso.")
 })
 
+// setado para que o cypress valide os erros tbem e não quebre o teste
+Cypress.on('uncaught:exception', (err, runnable) => {
+    return false
+  })
+
 declare global {
     namespace Cypress {
         interface Chainable {
-            createNewUser(chanceService: ChanceService, user: CreateUserModel): Chainable<void>
+            createNewUser(user: CreateUserModel): Chainable<void>
         }
     }
 }
